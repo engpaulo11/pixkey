@@ -10,7 +10,7 @@ A API foi construída com **Java 17**, **Spring Boot** e **Maven**, utilizando *
 
 ## Estrutura do Projeto
 
-![img_1.png](img_1.png)
+
 
 
 ### Principais Componentes
