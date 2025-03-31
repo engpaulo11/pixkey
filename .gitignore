@@ -1,0 +1,64 @@
+# Arquivos e diretórios do Maven
+/target/
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/release.properties
+/dependency-reduced-pom.xml
+/buildNumber.properties
+/.mvn/
+mvnw
+mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos de log
+*.log
+logs/
+*.log.*
+*.log-*
+
+# Arquivos de configuração local do Spring Boot
+application-local.properties
+application-dev.properties
+application-prod.properties
+
+# Diretórios de saída de build e runtime
+/out/
+/bin/
+
+# Arquivos do IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+/out/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de cache e temporários
+*.swp
+*~
+*.tmp
+*.bak
+*.cache
+
+# Dependências locais do Maven (se houver)
+ ~/.m2/repository/
+
+# Arquivos de banco de dados local (se gerados)
+*.db
+*.sql
+
+# Arquivos de Testcontainers (se gerados localmente)
+testcontainers.properties
+
+# Arquivos de ambiente virtual (se usar)
+.env
+venv/
+.envrc
+
+# Arquivos de cobertura de testes (ex.: JaCoCo)
+jacoco.exec
+*.exec
