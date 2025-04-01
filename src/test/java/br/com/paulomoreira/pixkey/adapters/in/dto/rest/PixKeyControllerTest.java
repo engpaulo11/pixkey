@@ -1,7 +1,7 @@
-package br.com.paulomoreira.pixkey.adapters.inbound.rest;
+package br.com.paulomoreira.pixkey.adapters.in.rest;
 
-import br.com.paulomoreira.pixkey.adapters.inbound.dto.request.CreatePixKeyRequest;
-import br.com.paulomoreira.pixkey.adapters.inbound.dto.response.PixKeyResponse;
+import br.com.paulomoreira.pixkey.adapters.in.dto.request.CreatePixKeyRequest;
+import br.com.paulomoreira.pixkey.adapters.in.dto.response.PixKeyResponse;
 import br.com.paulomoreira.pixkey.application.ports.in.*;
 import br.com.paulomoreira.pixkey.domain.model.AccountType;
 import br.com.paulomoreira.pixkey.domain.model.KeyType;

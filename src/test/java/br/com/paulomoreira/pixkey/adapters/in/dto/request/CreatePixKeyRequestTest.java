@@ -1,4 +1,4 @@
-package br.com.paulomoreira.pixkey.adapters.inbound.dto.request;
+package br.com.paulomoreira.pixkey.adapters.in.dto.request;
 
 import br.com.paulomoreira.pixkey.domain.model.AccountType;
 import br.com.paulomoreira.pixkey.domain.model.KeyType;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 

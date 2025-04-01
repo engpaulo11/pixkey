@@ -1,8 +1,8 @@
 package br.com.paulomoreira.pixkey.integration;
 
-import br.com.paulomoreira.pixkey.adapters.inbound.dto.request.CreatePixKeyRequest;
-import br.com.paulomoreira.pixkey.adapters.inbound.dto.response.PixKeyResponse;
-import br.com.paulomoreira.pixkey.adapters.inbound.rest.PixKeyController;
+import br.com.paulomoreira.pixkey.adapters.in.dto.request.CreatePixKeyRequest;
+import br.com.paulomoreira.pixkey.adapters.in.dto.response.PixKeyResponse;
+import br.com.paulomoreira.pixkey.adapters.in.rest.PixKeyController;
 import br.com.paulomoreira.pixkey.domain.exceptions.KeyNotFoundException;
 import br.com.paulomoreira.pixkey.domain.model.AccountType;
 import br.com.paulomoreira.pixkey.domain.model.KeyType;

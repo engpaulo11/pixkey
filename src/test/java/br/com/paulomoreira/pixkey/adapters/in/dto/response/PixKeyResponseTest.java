@@ -1,4 +1,4 @@
-package br.com.paulomoreira.pixkey.adapters.inbound.dto.response;
+package br.com.paulomoreira.pixkey.adapters.in.dto.response;
 
 import br.com.paulomoreira.pixkey.domain.model.AccountType;
 import br.com.paulomoreira.pixkey.domain.model.KeyType;

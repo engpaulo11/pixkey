@@ -1,4 +1,4 @@
-package br.com.paulomoreira.pixkey.adapters.outbound.persistence;
+package br.com.paulomoreira.pixkey.adapters.out.persistence;
 
 
 import br.com.paulomoreira.pixkey.application.ports.in.SearchPixKeysQuery;

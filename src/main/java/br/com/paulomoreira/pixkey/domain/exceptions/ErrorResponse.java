@@ -1,4 +1,4 @@
-package br.com.paulomoreira.pixkey.infrastructure.exception;
+package br.com.paulomoreira.pixkey.domain.exceptions;
 
 public record ErrorResponse(
         int status,

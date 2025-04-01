@@ -1,6 +1,5 @@
-package br.com.paulomoreira.pixkey.infrastructure.exception;
+package br.com.paulomoreira.pixkey.domain.exceptions;
 
-import br.com.paulomoreira.pixkey.domain.exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
