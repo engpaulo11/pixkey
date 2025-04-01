@@ -19,8 +19,8 @@ class CelularValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "+5511987654321",   // Formato válido sem espaços
-            "+5511123456789"    // Número válido com 13 dígitos totais
+            "+5511987654321",
+            "+5511123456789"
     })
     void validate_shouldAcceptValidCelularNumbers(String validNumber) {
         assertDoesNotThrow(() -> validator.validate(validNumber));
@@ -28,14 +28,14 @@ class CelularValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "5511987654321",    // Falta o "+"
-            "+551198765432",    // Muito curto (11 dígitos)
-            "+55119876543210",  // Muito longo (14 dígitos)
-            "+5411987654321",   // Código de país errado (não é Brasil)
-            "+55A1198765432",  // Caracteres não numéricos
-            "+55 11987654321",  // Contém espaço (deveria ser tratado antes)
-            "",                // Vazio
-            "   "             // Espaços em branco
+            "5511987654321",
+            "+551198765432",
+            "+55119876543210",
+            "+5411987654321",
+            "+55A1198765432",
+            "+55 11987654321",
+            "",
+            "   "
     })
     void validate_shouldRejectInvalidCelularNumbers(String invalidNumber) {
         assertThrows(InvalidKeyException.class, () -> validator.validate(invalidNumber));
@@ -44,7 +44,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckCountryCode() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("+5411987654321")); // Argentina
+                () -> validator.validate("+5411987654321"));
 
         assertTrue(exception.getMessage().contains("country code '+55'"));
     }
@@ -52,7 +52,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckNumberLength() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("+551198765432")); // 11 dígitos
+                () -> validator.validate("+551198765432"));
 
         assertTrue(exception.getMessage().contains("Celular key must have exactly 9 digits for the number"));
     }
@@ -60,7 +60,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckStartsWithPlus() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("5511987654321")); // Sem "+"
+                () -> validator.validate("5511987654321"));
 
         assertTrue(exception.getMessage().contains("start with '+'"));
     }
@@ -68,7 +68,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckNumericPart() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("+55A1198765432")); // Letra no número
+                () -> validator.validate("+55A1198765432"));
 
         assertTrue(exception.getMessage().contains("only numbers"));
     }
@@ -76,7 +76,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckDDDLength() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("+55511987654321")); // DDD com 1 dígito
+                () -> validator.validate("+55511987654321"));
 
         assertTrue(exception.getMessage().contains("Celular key must have 13-14 digits"));
     }
@@ -84,7 +84,7 @@ class CelularValidatorTest {
     @Test
     void validate_shouldCheckNumberPartLength() {
         Exception exception = assertThrows(InvalidKeyException.class,
-                () -> validator.validate("+551198765432")); // Número com 8 dígitos
+                () -> validator.validate("+551198765432"));
 
         assertTrue(exception.getMessage().contains("exactly 9 digits"));
     }

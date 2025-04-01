@@ -145,7 +145,7 @@ class CreatePixKeyRequestTest {
     @Test
     @DisplayName("Deve invalidar quando valorChave exceder tamanho máximo")
     void shouldInvalidateWhenKeyValueExceedsMaxLength() {
-        String invalidKeyValue = "a".repeat(78); // 78 caracteres (limite é 77)
+        String invalidKeyValue = "a".repeat(78);
 
         CreatePixKeyRequest request = new CreatePixKeyRequest(
                 KeyType.EMAIL,

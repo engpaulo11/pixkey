@@ -56,7 +56,6 @@ class CreatePixKeyUseCaseImplTest {
 
     @Test
     void shouldThrowInvalidKeyTypeExceptionWhenKeyTypeIsInvalid() {
-        // Arrange
         assertThrows(NullPointerException.class, () -> new PixKey(
                 null,
                 null,

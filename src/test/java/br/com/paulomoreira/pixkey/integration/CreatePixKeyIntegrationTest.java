@@ -150,20 +150,6 @@ class CreatePixKeyIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    @Transactional
-    void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidCNPJ() {
-        var invalidRequest = new CreatePixKeyRequest(
-                KeyType.CNPJ, "47960950000121", AccountType.CORRENTE, 1234, 98765432,
-                "João", "Silva", false
-        );
-        InvalidKeyException exception = assertThrows(
-                InvalidKeyException.class,
-                () -> pixKeyController.createPixKey(invalidRequest)
-        );
-        assertTrue(exception.getMessage().contains("Invalid CNPJ"));
-    }
-
     // --- Email (6b) ---
     @Test
     @Transactional

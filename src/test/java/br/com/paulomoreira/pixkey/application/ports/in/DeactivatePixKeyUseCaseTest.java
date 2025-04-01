@@ -22,7 +22,7 @@ class DeactivatePixKeyUseCaseTest {
 
     @Test
     void shouldDeactivatePixKeySuccessfully() {
-        // Arrange
+        
         UUID pixKeyId = UUID.randomUUID();
         LocalDateTime now = LocalDateTime.now();
 

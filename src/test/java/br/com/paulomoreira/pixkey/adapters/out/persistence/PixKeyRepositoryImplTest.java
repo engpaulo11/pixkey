@@ -59,7 +59,6 @@ class PixKeyRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        // Configuração da entidade de teste
         TEST_PIX_KEY_ENTITY.setId(TEST_ID);
         TEST_PIX_KEY_ENTITY.setKeyValue("12345678901");
         TEST_PIX_KEY_ENTITY.setType("CPF");
@@ -131,7 +130,6 @@ class PixKeyRepositoryImplTest {
     @Test
     @DisplayName("Deve pesquisar chaves com filtros")
     void shouldSearchPixKeysWithFilters() {
-        // Configuração
         Pageable pageable = PageRequest.of(0, 10);
         SearchPixKeysQuery query = new SearchPixKeysQuery(
                 KeyType.CPF.toString(),
@@ -145,10 +143,8 @@ class PixKeyRepositoryImplTest {
         when(jpaRepository.findAll(any(Specification.class), eq(pageable)))
                 .thenReturn(new PageImpl<>(List.of(TEST_PIX_KEY_ENTITY)));
 
-        // Execução
         Page<PixKey> result = pixKeyRepository.search(query, pageable);
 
-        // Verificação
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         assertEquals(TEST_ID, result.getContent().get(0).id());
@@ -158,12 +154,10 @@ class PixKeyRepositoryImplTest {
     @Test
     @DisplayName("Deve pesquisar chaves com filtros usando método findByFilters")
     void shouldFindByFilters() {
-        // Configuração
         Pageable pageable = PageRequest.of(0, 10);
         when(jpaRepository.findAll(any(Specification.class), eq(pageable)))
                 .thenReturn(new PageImpl<>(List.of(TEST_PIX_KEY_ENTITY)));
 
-        // Execução
         Page<PixKey> result = pixKeyRepository.findByFilters(
                 "CPF",
                 1234,
@@ -174,7 +168,6 @@ class PixKeyRepositoryImplTest {
                 pageable
         );
 
-        // Verificação
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
         assertEquals(TEST_ID, result.getContent().get(0).id());

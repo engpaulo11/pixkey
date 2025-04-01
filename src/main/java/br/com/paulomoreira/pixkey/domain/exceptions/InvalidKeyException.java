@@ -1,4 +1,3 @@
-// InvalidKeyException.java
 package br.com.paulomoreira.pixkey.domain.exceptions;
 
 public class InvalidKeyException extends BusinessException {
