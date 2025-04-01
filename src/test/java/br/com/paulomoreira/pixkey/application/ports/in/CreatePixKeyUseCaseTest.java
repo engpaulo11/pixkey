@@ -24,11 +24,13 @@ class CreatePixKeyUseCaseTest {
     void shouldCreatePixKeySuccessfully() {
         PixKey inputPixKey = new PixKey(
                 null, KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", null, true, null);
+                1234, 98765432, "João", "Silva",
+                null, true, null, true);
 
         PixKey expectedPixKey = new PixKey(
                 UUID.randomUUID(), KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", LocalDateTime.now(), true, null);
+                1234, 98765432, "João",
+                "Silva", LocalDateTime.now(), true, null, true);
 
         when(createPixKeyUseCase.execute(inputPixKey)).thenReturn(expectedPixKey);
 

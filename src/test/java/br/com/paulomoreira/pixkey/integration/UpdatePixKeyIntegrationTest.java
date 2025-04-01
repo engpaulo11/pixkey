@@ -69,7 +69,7 @@ class UpdatePixKeyIntegrationTest {
 
     private static final CreatePixKeyRequest VALID_REQUEST = new CreatePixKeyRequest(
             KeyType.CPF, "84315720003", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-    );
+    ,true);
     private static final UpdatePixKeyRequest UPDATE_REQUEST = new UpdatePixKeyRequest(
             AccountType.POUPANCA, 5678, 12345678, "Maria", "Santos"
     );
@@ -84,12 +84,12 @@ class UpdatePixKeyIntegrationTest {
         assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
 
         PixKeyResponse updatedKey = updateResponse.getBody();
-        assertEquals("POUPANCA", updatedKey.tipoConta());
-        assertEquals(5678, updatedKey.numeroAgencia());
-        assertEquals(12345678, updatedKey.numeroConta());
-        assertEquals("Maria", updatedKey.nomeCorrentista());
-        assertEquals("Santos", updatedKey.sobrenomeCorrentista());
-        assertEquals("84315720003", updatedKey.valorChave()); // Não alterado
+        assertEquals("POUPANCA", updatedKey.accountType());
+        assertEquals(5678, updatedKey.branchNumber());
+        assertEquals(12345678, updatedKey.accountNumber());
+        assertEquals("Maria", updatedKey.accountHolderName());
+        assertEquals("Santos", updatedKey.accountHolderLastName());
+        assertEquals("84315720003", updatedKey.keyValue());
     }
 
     @Test

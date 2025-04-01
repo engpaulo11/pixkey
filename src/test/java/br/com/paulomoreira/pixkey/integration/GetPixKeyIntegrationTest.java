@@ -67,7 +67,7 @@ class GetPixKeyIntegrationTest {
 
     private static final CreatePixKeyRequest VALID_REQUEST = new CreatePixKeyRequest(
             KeyType.CPF, "84315720003", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-    );
+   , true );
 
     @Test
     @Transactional
@@ -79,15 +79,15 @@ class GetPixKeyIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         PixKeyResponse pixKey = response.getBody();
         assertEquals(id.toString(), pixKey.id());
-        assertEquals("CPF", pixKey.tipoChave());
-        assertEquals("84315720003", pixKey.valorChave());
-        assertEquals("CORRENTE", pixKey.tipoConta());
-        assertEquals(1234, pixKey.numeroAgencia());
-        assertEquals(98765432, pixKey.numeroConta());
-        assertEquals("João", pixKey.nomeCorrentista());
-        assertEquals("Silva", pixKey.sobrenomeCorrentista());
-        assertNotNull(pixKey.dataHoraInclusao());
-        assertNull(pixKey.dataHoraInativacao());
+        assertEquals("CPF", pixKey.keyType());
+        assertEquals("84315720003", pixKey.keyValue());
+        assertEquals("CORRENTE", pixKey.accountType());
+        assertEquals(1234, pixKey.branchNumber());
+        assertEquals(98765432, pixKey.accountNumber());
+        assertEquals("João", pixKey.accountHolderName());
+        assertEquals("Silva", pixKey.accountHolderLastName());
+        assertNotNull(pixKey.createdAt());
+        assertNull(pixKey.deactivatedAt());
     }
 
     @Test

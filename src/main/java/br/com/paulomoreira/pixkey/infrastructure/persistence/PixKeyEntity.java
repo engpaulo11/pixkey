@@ -47,6 +47,9 @@ public class PixKeyEntity {
     @Column(name = "deactivated_at")
     private LocalDateTime deactivatedAt;
 
+    @Column(name = "is_legalperson")
+    boolean isLegalPerson;
+
     public PixKeyEntity(UUID id, String keyValue, String type, String accountType,
                         Integer branchNumber, Integer accountNumber, String accountHolderName,
                         String accountHolderLastName, LocalDateTime createdAt, Boolean active,
@@ -62,6 +65,7 @@ public class PixKeyEntity {
         this.createdAt = createdAt;
         this.active = active;
         this.deactivatedAt = deactivatedAt;
+        this.isLegalPerson = isLegalPerson();
     }
 
     public boolean isActive() {

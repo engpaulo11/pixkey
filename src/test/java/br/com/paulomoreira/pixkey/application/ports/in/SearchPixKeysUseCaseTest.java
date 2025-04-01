@@ -33,7 +33,8 @@ class SearchPixKeysUseCaseTest {
 
         PixKey pixKey = new PixKey(
                 UUID.randomUUID(), KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", LocalDateTime.now(), true, null);
+                1234, 98765432, "João", "Silva",
+                LocalDateTime.now(), true, null, true);
 
         Page<PixKey> expectedPage = new PageImpl<>(List.of(pixKey), pageable, 1);
 

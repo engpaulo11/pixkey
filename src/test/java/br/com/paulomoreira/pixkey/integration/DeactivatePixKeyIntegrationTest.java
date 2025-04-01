@@ -69,7 +69,7 @@ class DeactivatePixKeyIntegrationTest {
 
     private static final CreatePixKeyRequest VALID_REQUEST = new CreatePixKeyRequest(
             KeyType.CPF, "84315720003", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-    );
+    ,true);
 
     // Trecho relevante
     @Test
@@ -84,7 +84,7 @@ class DeactivatePixKeyIntegrationTest {
         PixKeyResponse deactivatedKey = deactivateResponse.getBody();
         assertNotNull(deactivatedKey, "O response body não deveria ser nulo");
         assertEquals(id.toString(), deactivatedKey.id());
-        assertNotNull(deactivatedKey.dataHoraInativacao(), "dataHoraInativacao deveria ser preenchida pelo código");
+        assertNotNull(deactivatedKey.deactivatedAt(), "dataHoraInativacao deveria ser preenchida pelo código");
 
         PixKeyEntity entity = pixKeyJpaRepository.findById(id).orElseThrow();
         assertFalse(entity.isActive(), "A chave deveria estar inativa");

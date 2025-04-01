@@ -29,7 +29,8 @@ class GetPixKeyUseCaseImplTest {
     void shouldReturnPixKeyWhenFound() {
         UUID id = UUID.randomUUID();
         PixKey pixKey = new PixKey(id, KeyType.CELULAR, "+5521994827834", AccountType.CORRENTE,
-                1234, 56789012, "Paulo", "Moreira", null, true, null);
+                1234, 56789012, "Paulo",
+                "Moreira", null, true, null, true);
         when(repository.findById(id)).thenReturn(Optional.of(pixKey));
 
         Optional<PixKey> result = useCase.execute(id);

@@ -40,7 +40,8 @@ class DeactivatePixKeyUseCaseImplTest {
     void shouldThrowKeyAlreadyInactiveExceptionWhenKeyIsInactive() {
         UUID id = UUID.randomUUID();
         PixKey inactiveKey = new PixKey(id, KeyType.CELULAR, "+5521994827834", AccountType.CORRENTE,
-                1234, 56789012, "Paulo", "Moreira", null, false, null);
+                1234, 56789012, "Paulo",
+                "Moreira", null, false, null, true);
         when(repository.findById(id)).thenReturn(Optional.of(inactiveKey));
 
         KeyAlreadyInactiveException exception = assertThrows(KeyAlreadyInactiveException.class, () -> useCase.execute(id));

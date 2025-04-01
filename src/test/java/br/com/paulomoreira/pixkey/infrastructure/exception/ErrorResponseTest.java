@@ -1,5 +1,6 @@
 package br.com.paulomoreira.pixkey.infrastructure.exception;
 
+import br.com.paulomoreira.pixkey.domain.exceptions.ErrorResponse;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

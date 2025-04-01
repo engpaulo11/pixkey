@@ -35,22 +35,23 @@ class PixKeyResponseTest {
                 "Silva",
                 TEST_CREATED_AT,
                 true,
-                null
+                null,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
 
         assertAll("Verificação dos campos da resposta",
                 () -> assertEquals(TEST_ID.toString(), response.id()),
-                () -> assertEquals("CPF", response.tipoChave()),
-                () -> assertEquals("12345678901", response.valorChave()),
-                () -> assertEquals("CORRENTE", response.tipoConta()),
-                () -> assertEquals(1234, response.numeroAgencia()),
-                () -> assertEquals(98765432, response.numeroConta()),
-                () -> assertEquals("João", response.nomeCorrentista()),
-                () -> assertEquals("Silva", response.sobrenomeCorrentista()),
-                () -> assertEquals(TEST_CREATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.dataHoraInclusao()),
-                () -> assertNull(response.dataHoraInativacao())
+                () -> assertEquals("CPF", response.keyType()),
+                () -> assertEquals("12345678901", response.keyValue()),
+                () -> assertEquals("CORRENTE", response.accountType()),
+                () -> assertEquals(1234, response.branchNumber()),
+                () -> assertEquals(98765432, response.accountNumber()),
+                () -> assertEquals("João", response.accountHolderName()),
+                () -> assertEquals("Silva", response.accountHolderLastName()),
+                () -> assertEquals(TEST_CREATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.createdAt()),
+                () -> assertNull(response.deactivatedAt())
         );
     }
 
@@ -68,22 +69,23 @@ class PixKeyResponseTest {
                 null,
                 TEST_CREATED_AT,
                 false,
-                TEST_DEACTIVATED_AT
+                TEST_DEACTIVATED_AT,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
 
         assertAll("Verificação dos campos da resposta inativa",
                 () -> assertEquals(TEST_ID.toString(), response.id()),
-                () -> assertEquals("EMAIL", response.tipoChave()),
-                () -> assertEquals("test@example.com", response.valorChave()),
-                () -> assertEquals("POUPANCA", response.tipoConta()),
-                () -> assertEquals(4321, response.numeroAgencia()),
-                () -> assertEquals(12345678, response.numeroConta()),
-                () -> assertEquals("Maria", response.nomeCorrentista()),
-                () -> assertNull(response.sobrenomeCorrentista()),
-                () -> assertEquals(TEST_CREATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.dataHoraInclusao()),
-                () -> assertEquals(TEST_DEACTIVATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.dataHoraInativacao())
+                () -> assertEquals("EMAIL", response.keyType()),
+                () -> assertEquals("test@example.com", response.keyValue()),
+                () -> assertEquals("POUPANCA", response.accountType()),
+                () -> assertEquals(4321, response.branchNumber()),
+                () -> assertEquals(12345678, response.accountNumber()),
+                () -> assertEquals("Maria", response.accountHolderName()),
+                () -> assertNull(response.accountHolderLastName()),
+                () -> assertEquals(TEST_CREATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.createdAt()),
+                () -> assertEquals(TEST_DEACTIVATED_AT.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME), response.deactivatedAt())
         );
     }
 
@@ -102,11 +104,12 @@ class PixKeyResponseTest {
                 "Silva",
                 TEST_CREATED_AT,
                 true,
-                null
+                null,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
-        assertEquals(keyType.name(), response.tipoChave());
+        assertEquals(keyType.name(), response.keyType());
     }
 
     @ParameterizedTest
@@ -124,11 +127,12 @@ class PixKeyResponseTest {
                 "Silva",
                 TEST_CREATED_AT,
                 true,
-                null
+                null,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
-        assertEquals(accountType.name(), response.tipoConta());
+        assertEquals(accountType.name(), response.accountType());
     }
 
     @ParameterizedTest
@@ -146,11 +150,12 @@ class PixKeyResponseTest {
                 lastName,
                 TEST_CREATED_AT,
                 true,
-                null
+                null,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
-        assertNull(response.sobrenomeCorrentista());
+        assertNull(response.accountHolderLastName());
     }
 
     @Test
@@ -170,14 +175,15 @@ class PixKeyResponseTest {
                 "Silva",
                 testDate,
                 false,
-                testDate.plusDays(1)
+                testDate.plusDays(1),
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
 
         assertAll("Verificação da formatação das datas",
-                () -> assertEquals(expectedDate, response.dataHoraInclusao()),
-                () -> assertEquals("2023-06-16T14:30:45", response.dataHoraInativacao())
+                () -> assertEquals(expectedDate, response.createdAt()),
+                () -> assertEquals("2023-06-16T14:30:45", response.deactivatedAt())
         );
     }
 
@@ -195,11 +201,12 @@ class PixKeyResponseTest {
                 "Silva",
                 TEST_CREATED_AT,
                 true,
-                null
+                null,
+                true
         );
 
         PixKeyResponse response = PixKeyResponse.fromDomain(pixKey);
-        assertNull(response.dataHoraInativacao());
+        assertNull(response.deactivatedAt());
     }
 
     private String getSampleKeyValue(KeyType keyType) {

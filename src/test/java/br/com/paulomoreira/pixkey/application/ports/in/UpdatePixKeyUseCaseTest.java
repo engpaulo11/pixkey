@@ -27,11 +27,13 @@ class UpdatePixKeyUseCaseTest {
 
         PixKey existingPixKey = new PixKey(
                 pixKeyId, KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", createdAt, true, null);
+                1234, 98765432, "João",
+                "Silva", createdAt, true, null, true);
 
         PixKey updatedPixKey = new PixKey(
                 pixKeyId, KeyType.CPF, "12345678901", AccountType.POUPANCA,
-                4321, 87654321, "Maria", "Santos", createdAt, true, null);
+                4321, 87654321, "Maria", "Santos",
+                createdAt, true, null, true);
 
         when(updatePixKeyUseCase.execute(pixKeyId, updatedPixKey)).thenReturn(updatedPixKey);
 

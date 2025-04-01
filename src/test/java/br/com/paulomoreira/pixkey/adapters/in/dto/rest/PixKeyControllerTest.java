@@ -41,11 +41,13 @@ class PixKeyControllerTest {
         pixKeyId = UUID.randomUUID();
         pixKey = new PixKey(
                 pixKeyId, KeyType.EMAIL, "test@example.com", AccountType.CORRENTE,
-                1234, 56789012, "John", "Doe", null, true, null
+                1234, 56789012, "John", "Doe",
+                null, true, null, true
         );
         createPixKeyRequest = new CreatePixKeyRequest(
                 KeyType.EMAIL, "test@example.com", AccountType.CORRENTE,
-                1234, 56789012, "John", "Doe"
+                1234, 56789012, "John", "Doe",
+                true
         );
     }
 

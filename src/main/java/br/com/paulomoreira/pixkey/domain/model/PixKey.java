@@ -15,7 +15,8 @@ public record PixKey(
         String accountHolderLastName,
         LocalDateTime createdAt,
         boolean active,
-        LocalDateTime deactivatedAt
+        LocalDateTime deactivatedAt,
+        boolean isLegalPerson
 ) {
 
     public PixKey {
@@ -26,7 +27,7 @@ public record PixKey(
             createdAt = LocalDateTime.now();
         }
         Objects.requireNonNull(keyValue, "keyValue cannot be null");
-        Objects.requireNonNull(type, "type cannot be null");
+        Objects.requireNonNull(type, "keyType cannot be null");
         Objects.requireNonNull(accountType, "accountType cannot be null");
     }
 
@@ -35,8 +36,7 @@ public record PixKey(
             return this;
         }
         LocalDateTime newDeactivatedAt = active ? null : LocalDateTime.now();
-        return new PixKey(id, type,keyValue, accountType, branchNumber, accountNumber,
-                accountHolderName, accountHolderLastName, createdAt, active, newDeactivatedAt);
+        return new PixKey(id, type, keyValue, accountType, branchNumber, accountNumber,
+                accountHolderName, accountHolderLastName, createdAt, active, newDeactivatedAt, isLegalPerson);
     }
-
 }

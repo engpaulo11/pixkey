@@ -51,7 +51,8 @@ class PixKeyRepositoryImplTest {
             "Silva",
             NOW,
             true,
-            null
+            null,
+            true
     );
 
     private static final PixKeyEntity TEST_PIX_KEY_ENTITY = new PixKeyEntity();

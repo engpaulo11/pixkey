@@ -37,7 +37,8 @@ class UpdatePixKeyRequestTest {
             "Silva",
             LocalDateTime.now(),
             true,
-            null
+            null,
+            true
     );
 
     @BeforeAll

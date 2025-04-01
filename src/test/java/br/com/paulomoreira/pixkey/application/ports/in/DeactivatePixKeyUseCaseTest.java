@@ -28,14 +28,13 @@ class DeactivatePixKeyUseCaseTest {
 
         PixKey expectedPixKey = new PixKey(
                 pixKeyId, KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", now.minusDays(1), false, now);
+                1234, 98765432, "João", "Silva",
+                now.minusDays(1), false, now, true);
 
         when(deactivatePixKeyUseCase.execute(pixKeyId)).thenReturn(expectedPixKey);
 
-        // Act
         PixKey result = deactivatePixKeyUseCase.execute(pixKeyId);
 
-        // Assert
         assertNotNull(result);
         assertFalse(result.active());
         assertNotNull(result.deactivatedAt());

@@ -36,9 +36,8 @@ class CreatePixKeyUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
-        // Configurar um PixKey válido para os testes
         validPixKey = new PixKey(
-                null, // ID será gerado automaticamente
+                null,
                 KeyType.CELULAR,
                 "+5521994827834",
                 AccountType.CORRENTE,
@@ -46,12 +45,12 @@ class CreatePixKeyUseCaseImplTest {
                 56789012,
                 "Paulo",
                 "Moreira",
-                null, // createdAt será gerado automaticamente
+                null,
                 true,
-                null
+                null,
+                true
         );
 
-        // Inicializar o caso de uso sem stubbing no setUp
         createPixKeyUseCase = new CreatePixKeyUseCaseImpl(repository, List.of(celularValidator));
     }
 
@@ -60,7 +59,7 @@ class CreatePixKeyUseCaseImplTest {
         // Arrange
         assertThrows(NullPointerException.class, () -> new PixKey(
                 null,
-                null, // Tipo inválido (null)
+                null,
                 "+5521994827834",
                 AccountType.CORRENTE,
                 1234,
@@ -69,18 +68,18 @@ class CreatePixKeyUseCaseImplTest {
                 "Moreira",
                 null,
                 true,
-                null
+                null,
+                true
         ));
 
-        // Não precisa de stubbing aqui, pois o teste falha no construtor do PixKey
     }
 
     @Test
     void shouldThrowInvalidKeyExceptionWhenNoValidatorFound() {
-        // Arrange
+
         PixKey pixKeyWithoutValidator = new PixKey(
                 null,
-                KeyType.EMAIL, // Tipo válido, mas sem validador correspondente
+                KeyType.EMAIL,
                 "usuario@dominio.com",
                 AccountType.CORRENTE,
                 1234,
@@ -89,23 +88,23 @@ class CreatePixKeyUseCaseImplTest {
                 "Moreira",
                 null,
                 true,
-                null
+                null,
+                true
         );
 
-        // Act & Assert
         InvalidKeyException exception = assertThrows(InvalidKeyException.class, () -> {
             createPixKeyUseCase.execute(pixKeyWithoutValidator);
         });
-        assertEquals("No validator found for key type: EMAIL", exception.getMessage());
+        assertEquals("No validator found for key keyType: EMAIL", exception.getMessage());
     }
 
     @Test
     void shouldThrowDuplicateKeyExceptionWhenKeyValueAlreadyExists() {
-        // Arrange
+
         when(celularValidator.getType()).thenReturn(KeyType.CELULAR); // Stubbing necessário aqui
         when(repository.existsByKeyValue(validPixKey.keyValue())).thenReturn(true);
 
-        // Act & Assert
+
         DuplicateKeyException exception = assertThrows(DuplicateKeyException.class, () -> {
             createPixKeyUseCase.execute(validPixKey);
         });
@@ -115,12 +114,12 @@ class CreatePixKeyUseCaseImplTest {
 
     @Test
     void shouldThrowKeyLimitExceededExceptionWhenLimitIsExceededForPessoaFisica() {
-        // Arrange
+
         when(celularValidator.getType()).thenReturn(KeyType.CELULAR); // Stubbing necessário aqui
         when(repository.existsByKeyValue(validPixKey.keyValue())).thenReturn(false);
         when(repository.countByAccount(1234, 56789012)).thenReturn(5); // Limite PF = 5
 
-        // Act & Assert
+
         KeyLimitExceededException exception = assertThrows(KeyLimitExceededException.class, () -> {
             createPixKeyUseCase.execute(validPixKey);
         });
@@ -130,7 +129,7 @@ class CreatePixKeyUseCaseImplTest {
 
     @Test
     void shouldThrowKeyLimitExceededExceptionWhenLimitIsExceededForPessoaJuridica() {
-        // Arrange
+
         PixKey cnpjPixKey = new PixKey(
                 null,
                 KeyType.CNPJ,
@@ -142,7 +141,8 @@ class CreatePixKeyUseCaseImplTest {
                 null,
                 null,
                 true,
-                null
+                null,
+                false
         );
         KeyValidator cnpjValidator = mock(KeyValidator.class);
         when(cnpjValidator.getType()).thenReturn(KeyType.CNPJ);
@@ -151,7 +151,7 @@ class CreatePixKeyUseCaseImplTest {
         when(repository.existsByKeyValue(cnpjPixKey.keyValue())).thenReturn(false);
         when(repository.countByAccount(1234, 56789012)).thenReturn(20); // Limite PJ = 20
 
-        // Act & Assert
+
         KeyLimitExceededException exception = assertThrows(KeyLimitExceededException.class, () -> {
             createPixKeyUseCase.execute(cnpjPixKey);
         });
@@ -161,19 +161,17 @@ class CreatePixKeyUseCaseImplTest {
 
     @Test
     void shouldCreatePixKeySuccessfullyWhenAllConditionsAreMet() {
-        // Arrange
-        when(celularValidator.getType()).thenReturn(KeyType.CELULAR); // Stubbing necessário aqui
+
+        when(celularValidator.getType()).thenReturn(KeyType.CELULAR);
         when(repository.existsByKeyValue(validPixKey.keyValue())).thenReturn(false);
-        when(repository.countByAccount(1234, 56789012)).thenReturn(2); // Abaixo do limite
+        when(repository.countByAccount(1234, 56789012)).thenReturn(2);
         when(repository.save(any(PixKey.class))).thenReturn(validPixKey);
 
-        // Act
         PixKey result = createPixKeyUseCase.execute(validPixKey);
 
-        // Assert
         assertNotNull(result);
-        assertNotNull(result.id()); // ID gerado
-        assertNotNull(result.createdAt()); // Data gerada
+        assertNotNull(result.id());
+        assertNotNull(result.createdAt());
         assertEquals(validPixKey.keyValue(), result.keyValue());
         assertEquals(validPixKey.type(), result.type());
         assertTrue(result.active());

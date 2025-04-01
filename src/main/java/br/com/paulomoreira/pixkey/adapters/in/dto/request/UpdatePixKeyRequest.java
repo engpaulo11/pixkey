@@ -15,7 +15,8 @@ public record UpdatePixKeyRequest(
         return new PixKey(
                 existingKey.id(), existingKey.type(), existingKey.keyValue(),
                 tipoConta, numeroAgencia, numeroConta, nomeCorrentista, sobrenomeCorrentista,
-                existingKey.createdAt(), existingKey.active(), existingKey.deactivatedAt()
+                existingKey.createdAt(), existingKey.active(), existingKey.deactivatedAt(),
+                existingKey.isLegalPerson()
         );
     }
 }

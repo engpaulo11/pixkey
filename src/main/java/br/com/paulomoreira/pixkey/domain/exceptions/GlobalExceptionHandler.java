@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -104,7 +106,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidKeyTypeException.class)
     public ResponseEntity<ErrorResponse> handleInvalidKeyTypeException(InvalidKeyTypeException ex) {
-        logger.warn("Invalid key type: {}", ex.getMessage());
+        logger.warn("Invalid key keyType: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
@@ -122,6 +124,22 @@ public class GlobalExceptionHandler {
                 "Bad Request",
                 "Failed to parse request: " + message
         );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        String errorMessage = fieldError != null ? fieldError.getDefaultMessage() : "Erro de validação";
+        String fieldName = fieldError != null ? fieldError.getField() : "desconhecido";
+        String details = String.format("Campo '%s' inválido: %s", fieldName, fieldError.getRejectedValue());
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                errorMessage,
+                details
+        );
+
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

@@ -39,7 +39,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 "João",
-                "Silva"
+                "Silva",
+                true
         );
 
         PixKey pixKey = request.toDomain();
@@ -69,7 +70,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 invalidName,
-                "Silva"
+                "Silva",
+                true
         );
 
         var violations = validator.validate(request);
@@ -91,7 +93,8 @@ class CreatePixKeyRequestTest {
                 invalidBranch,
                 12345678,
                 "João",
-                "Silva"
+                "Silva",
+                true
         );
 
         var violations = validator.validate(request);
@@ -110,7 +113,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 "João",
-                null
+                null,
+                true
         );
 
         var violations = validator.validate(request);
@@ -128,7 +132,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 "João",
-                "Silva"
+                "Silva",
+                true
         );
 
         var violations = validator.validate(request);
@@ -149,7 +154,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 "João",
-                "Silva"
+                "Silva",
+                true
         );
 
         var violations = validator.validate(request);
@@ -178,7 +184,8 @@ class CreatePixKeyRequestTest {
                 1234,
                 12345678,
                 "João",
-                "Silva"
+                "Silva",
+                true
         );
 
         var violations = validator.validate(request);
@@ -196,7 +203,8 @@ class CreatePixKeyRequestTest {
                 4321,
                 87654321,
                 "Maria",
-                "Santos"
+                "Santos",
+                true
         );
 
         assertAll(

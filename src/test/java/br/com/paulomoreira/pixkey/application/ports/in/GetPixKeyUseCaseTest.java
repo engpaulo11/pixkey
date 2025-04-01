@@ -26,7 +26,8 @@ class GetPixKeyUseCaseTest {
         UUID pixKeyId = UUID.randomUUID();
         PixKey expectedPixKey = new PixKey(
                 pixKeyId, KeyType.CPF, "12345678901", AccountType.CORRENTE,
-                1234, 98765432, "João", "Silva", LocalDateTime.now(), true, null);
+                1234, 98765432, "João", "Silva",
+                LocalDateTime.now(), true, null, true);
 
         when(getPixKeyUseCase.execute(pixKeyId)).thenReturn(Optional.of(expectedPixKey));
 

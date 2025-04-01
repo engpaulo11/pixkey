@@ -28,7 +28,8 @@ class UpdatePixKeyUseCaseImplTest {
     void shouldUpdatePixKeySuccessfully() {
         UUID id = UUID.randomUUID();
         PixKey updatedPixKey = new PixKey(id, KeyType.CELULAR, "+5521994827834", AccountType.POUPANCA,
-                4321, 12345678, "Paulo", "Silva", null, true, null);
+                4321, 12345678, "Paulo", "Silva",
+                null, true, null, true);
         when(repository.save(updatedPixKey)).thenReturn(updatedPixKey);
 
         PixKey result = useCase.execute(id, updatedPixKey);

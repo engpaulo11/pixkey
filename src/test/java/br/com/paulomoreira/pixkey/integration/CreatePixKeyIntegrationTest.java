@@ -71,21 +71,25 @@ class CreatePixKeyIntegrationTest {
         pixKeyJpaRepository.flush();
     }
 
-    // Constantes para reuso nos testes
     private static final CreatePixKeyRequest VALID_CPF_REQUEST = new CreatePixKeyRequest(
-            KeyType.CPF, "84315720003", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
+            KeyType.CPF, "84315720003", AccountType.CORRENTE, 1234, 98765432,
+            "João", "Silva", true
     );
     private static final CreatePixKeyRequest VALID_CNPJ_REQUEST = new CreatePixKeyRequest(
-            KeyType.CNPJ, "47960950000121", AccountType.CORRENTE, 1234, 98765432, "Empresa", "LTDA"
+            KeyType.CNPJ, "47960950000121", AccountType.CORRENTE, 1234, 98765432,
+            "Empresa", "LTDA", false
     );
     private static final CreatePixKeyRequest VALID_EMAIL_REQUEST = new CreatePixKeyRequest(
-            KeyType.EMAIL, "joao.silva@example.com", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
+            KeyType.EMAIL, "joao.silva@example.com", AccountType.CORRENTE, 1234, 98765432,
+            "João", "Silva", true
     );
     private static final CreatePixKeyRequest VALID_PHONE_REQUEST = new CreatePixKeyRequest(
-            KeyType.CELULAR, "+5511999999999", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
+            KeyType.CELULAR, "+5511999999999", AccountType.CORRENTE, 1234, 98765432,
+            "João", "Silva", true
     );
     private static final CreatePixKeyRequest VALID_RANDOM_REQUEST = new CreatePixKeyRequest(
-            KeyType.ALEATORIO, "123e4567-e89b-12d3-a456-426614174000", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
+            KeyType.ALEATORIO, "123e4567-e89b-12d3-a456-426614174000", AccountType.CORRENTE,
+            1234, 98765432, "João", "Silva", true
     );
 
     /*****************************************************************
@@ -128,7 +132,8 @@ class CreatePixKeyIntegrationTest {
     @Transactional
     void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidCPF() {
         var invalidRequest = new CreatePixKeyRequest(
-                KeyType.CPF, "12345678901", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
+                KeyType.CPF, "12345678901", AccountType.CORRENTE, 1234, 98765432,
+                "João", "Silva", true
         );
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
@@ -149,7 +154,8 @@ class CreatePixKeyIntegrationTest {
     @Transactional
     void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidCNPJ() {
         var invalidRequest = new CreatePixKeyRequest(
-                KeyType.CNPJ, "12345678901234", AccountType.CORRENTE, 1234, 98765432, "Empresa", "LTDA"
+                KeyType.CNPJ, "47960950000121", AccountType.CORRENTE, 1234, 98765432,
+                "João", "Silva", false
         );
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
@@ -171,7 +177,7 @@ class CreatePixKeyIntegrationTest {
     void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidEmailFormat() {
         var invalidRequest = new CreatePixKeyRequest(
                 KeyType.EMAIL, "email-invalido@", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-        );
+        ,true );
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
                 () -> pixKeyController.createPixKey(invalidRequest)
@@ -184,7 +190,7 @@ class CreatePixKeyIntegrationTest {
     void createPixKey_ShouldThrowInvalidKeyException_WhenEmailExceedsMaxLength() {
         var invalidRequest = new CreatePixKeyRequest(
                 KeyType.EMAIL, "a".repeat(78) + "@example.com", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-        );
+        , true);
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
                 () -> pixKeyController.createPixKey(invalidRequest)
@@ -205,7 +211,7 @@ class CreatePixKeyIntegrationTest {
     void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidPhoneFormat() {
         var invalidRequest = new CreatePixKeyRequest(
                 KeyType.CELULAR, "11999999999", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-        );
+        ,true);
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
                 () -> pixKeyController.createPixKey(invalidRequest)
@@ -226,7 +232,7 @@ class CreatePixKeyIntegrationTest {
     void createPixKey_ShouldThrowInvalidKeyException_WhenInvalidRandomKey() {
         var invalidRequest = new CreatePixKeyRequest(
                 KeyType.ALEATORIO, "invalid-random-key", AccountType.CORRENTE, 1234, 98765432, "João", "Silva"
-        );
+       ,true );
         InvalidKeyException exception = assertThrows(
                 InvalidKeyException.class,
                 () -> pixKeyController.createPixKey(invalidRequest)
@@ -268,7 +274,8 @@ class CreatePixKeyIntegrationTest {
                     1234,
                     98765432,
                     "Cliente " + i,
-                    "Sobrenome"
+                    "Sobrenome",
+                    true
             );
             pixKeyController.createPixKey(request);
         }
@@ -280,7 +287,8 @@ class CreatePixKeyIntegrationTest {
                 1234,
                 98765432,
                 "Cliente Excedente",
-                "Sobrenome"
+                "Sobrenome",
+                true
         );
 
         assertThrows(
@@ -309,13 +317,13 @@ class CreatePixKeyIntegrationTest {
                     AccountType.CORRENTE,
                     1234,
                     98765432,
-                    "Empresa " + cnpj.substring(0, 4),  // Nome único para cada CNPJ
-                    "LTDA"
+                    "Empresa " + cnpj.substring(0, 4),
+                    "LTDA",
+                    false
             );
             pixKeyController.createPixKey(request);
         }
 
-        // Teste adicional para verificar o limite
         ResponseEntity<PixKeyResponse> response = pixKeyController.createPixKey(
                 new CreatePixKeyRequest(
                         KeyType.CNPJ,
@@ -324,7 +332,8 @@ class CreatePixKeyIntegrationTest {
                         1234,
                         98765432,
                         "Empresa Teste",
-                        "LTDA"
+                        "LTDA",
+                        false
                 )
         );
         assertEquals(HttpStatus.OK, response.getStatusCode());

@@ -130,7 +130,8 @@ public class PixKeyRepositoryImpl implements PixKeyRepository {
                 entity.getAccountHolderLastName(),
                 entity.getCreatedAt(),
                 entity.isActive(),
-                entity.getDeactivatedAt()
+                entity.getDeactivatedAt(),
+                entity.isLegalPerson()
         );
     }
 }
